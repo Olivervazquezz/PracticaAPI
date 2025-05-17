@@ -1,24 +1,12 @@
-import "dotenv/config";
-import express from "express";
-import morgan from "morgan";
-import cors from "cors";
-
-import indexRoutes from "./routes/index.routes.js";
-import userRoutes  from "./routes/users.routes.js";
-import authRoutes  from "./routes/auth.routes.js";
-
+const express = require('express');
 const app = express();
+const port = 3000;
 
-// middlewares globales
-app.use(morgan("dev"));
-app.use(cors());
 app.use(express.json());
 
-// rutas
-app.use(indexRoutes);
-app.use("/users", userRoutes);
-app.use("/login", authRoutes);
+app.use('/usuarios', require('./routes/users.routes'));
+app.use('/login', require('./routes/auth.routes'));
 
-// arranque
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀  API ready → http://localhost:${PORT}`));
+app.listen(port, () => {
+  console.log(`Servidor corriendo en http://localhost:${port}`);
+});
